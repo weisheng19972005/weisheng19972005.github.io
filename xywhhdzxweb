@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园文化活动中心年度总结</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', sans-serif; color: rgb(142, 0, 155); }
+        
+        .section { 
+            background-image: url('bg3.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* 修改后的CSS样式 */
+        .main-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .arrow {
+            margin-top: 40px; /* 增加与文字的间距 */
+            font-size: 4rem;
+            animation: bounce 2s infinite;
+            color: rgba(167, 0, 182, 0.8);
+            cursor: pointer;
+        }
+
+        .department-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .department-btn {
+            padding: 20px 40px;
+            background: rgba(77, 0, 87, 0.274);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .department-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .content-page {
+            padding: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .animate-text span {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.5s forwards;
+            display: inline-block;
+        }
+
+        video {
+            width: 100%;
+            margin-top: 30px;
+            border-radius: 15px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 新增样式 */
+        .highlight-number {
+            color: red;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        /* 在原有CSS中添加以下内容 */
+        .fade-in-line {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s forwards;
+            animation-delay: 0.5s; /* 基础延迟 */
+            margin: 15px 0;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="fullpage">
+        <!-- 第一页 -->
+        <div class="section" data-anchor="page1">
+            <div class="main-title">
+                <h1 class="animate-text" style="font-size: 3em">2024校园文化活动中心年度总结</h1>
+                <div class="arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二页 -->
+        <div class="section" data-anchor="page2">
+            <div class="department-menu">
+                <div class="department-btn" onclick="loadDepartment('宣传')">宣传部</div>
+                <div class="department-btn" onclick="loadDepartment('文艺')">文艺部</div>
+                <div class="department-btn" onclick="loadDepartment('体育')">体育部</div>
+                <div class="department-btn" onclick="loadDepartment('外联')">外联部</div>
+            </div>
+        </div>
+
+        <!-- 第三页 -->
+        <div class="section" data-anchor="page3">
+            <div class="content-page" id="department-content"></div>
+        </div>
+
+        <!-- 第四页 -->
+        <div class="section" data-anchor="page4">
+            <div class="main-title">
+                <h1 class="animate-text" style="font-size: 3em">2024校园文化活动中心年度总结</h1>
+                <p class="animate-text" style="font-size: 1.5em; margin-top: 20px">感谢观看！2025我们携手共进！</p>
+                <video controls autoplay muted loop>
+                    <source src="summary.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放。
+                </video>
+                <p style="font-size: 0.8em; margin-top: 20px">出品丨校园文化活动中心<br/>数据统计丨胡洁雨 尤佳敏<br/>技术支持丨祝艺源</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.min.js"></script>
+    <script>
+        new fullpage('#fullpage', {
+            navigation: true,
+            scrollingSpeed: 800,
+            onLeave: function(origin, destination, direction){
+                // 文字动画触发
+                $('.animate-text span').css('animation', 'none');
+                setTimeout(() => {
+                    animateText();
+                }, 500);
+            }
+        });
+
+        function animateText() {
+            $('.animate-text').each(function(){
+                let $this = $(this);
+                $this.html($this.text().replace(/\S/g, "<span>$&</span>"));
+                $this.find('span').each((i, el) => {
+                    setTimeout(() => {
+                        $(el).css('animation', 'fadeUp 0.5s forwards');
+                    }, i * 10);
+                });
+            });
+        }
+
+         // 修改后的loadDepartment函数
+         function loadDepartment(dept) {
+            const content = {
+                宣传: `
+                    <h2 class="fade-in-line" style="animation-delay: 0.3s">宣传部2024年度工作成果</h2>
+                    <p class="fade-in-line" style="animation-delay: 0.6s">推送<span class='highlight-number'>69</span>篇</p>
+                    <p class="fade-in-line" style="animation-delay: 0.9s">文字累计<span class='highlight-number'>54517</span>字</p>
+                    <p class="fade-in-line" style="animation-delay: 1.2s">阅读量<span class='highlight-number'>63343</span>次</p>
+                    <p class="fade-in-line" style="animation-delay: 1.5s">累计返图<span class='highlight-number'>60.7</span>GB</p>
+                `,
+                文艺: `
+                    <h2 class="fade-in-line" style="animation-delay: 0.3s">文艺部2024年度活动回顾</h2>
+                    <p class="fade-in-line" style="animation-delay: 0.6s">举办文艺活动<span class='highlight-number'>8</span>次</p>
+                    <p class="fade-in-line" style="animation-delay: 0.9s">湖畔音乐会、迎新晚会、艺术表演大赛……</p>
+                    <p class="fade-in-line" style="animation-delay: 1.2s">观众参与累计数超<span class='highlight-number'>4000</span>次</p>
+                    <p class="fade-in-line" style="animation-delay: 1.5s">2024-2025跨年晚会<br/>从策划到协调，从节目到场控……<br/>文艺部携手其他兄弟部门和组织，并肩作战<br/>让晚会完美落幕</p>
+                `,
+                体育: `
+                    <h2 class="fade-in-line" style="animation-delay: 0.3s">体育部2024年度活动回顾</h2>
+                    <p class="fade-in-line" style="animation-delay: 0.6s">举办体育活动<span class='highlight-number'>5</span>次<br/>学代会预热活动、校园吉尼斯大赛……</p>
+                    <p class="fade-in-line" style="animation-delay: 0.9s">举办荧光夜跑<span class='highlight-number'>15</span>期</p>
+                    <p class="fade-in-line" style="animation-delay: 1.2s">累计减打卡<span class='highlight-number'>4536</span>次</p>
+                `,
+                外联: `
+                    <h2 class="fade-in-line" style="animation-delay: 0.3s">外联部2024工作成果</h2>
+                    <p class="fade-in-line" style="animation-delay: 0.6s">采购物资<span class='highlight-number'>9</span>次</p>
+                    <p class="fade-in-line" style="animation-delay: 0.9s">主办了<span class='highlight-number'>国庆观影活动</span></p>
+                    <p class="fade-in-line" style="animation-delay: 1.2s">所有的活动运转都离不开<span class='highlight-number'>外联部</span></p>
+                    <p class="fade-in-line" style="animation-delay: 1.5s">协调场地、设施、物资、人员、海报……<br/>每一项活动都有外联部的身影</p>
+                `
+            };
+            
+            // 先清空内容并立即跳转页面
+            $('#department-content').empty();
+            fullpage_api.moveTo('page3');
+            
+            // 延迟加载内容以确保动画生效
+            setTimeout(() => {
+                $('#department-content').html(content[dept]);
+                // 重置动画
+                $('.fade-in-line').each(function() {
+                    $(this).css('animation', 'none');
+                    requestAnimationFrame(() => {
+                        $(this).css('animation', '');
+                    });
+                });
+            }, 500);
+        }
+
+        // 移除原来的animateLines函数
+
+        $(document).ready(() => {
+            animateText();
+            setTimeout(() => fullpage_api.moveTo(1, 0), 1000);
+        });
+    </script>
+</body>
+</html>
